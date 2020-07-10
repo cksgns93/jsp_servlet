@@ -21,7 +21,7 @@ public class UserVO implements Serializable{
 	private int mstate; //회원상태(일반회원: 0, 정지회원: 1, 일반회원: -1)
 	
 	public UserVO() {
-		
+		System.out.println("UserVO 생성");
 	}
 	
 	public UserVO(int idx, String name, String userid, String pwd, String hp1, String hp2, String hp3, String post,
@@ -56,6 +56,7 @@ public class UserVO implements Serializable{
 
 	public void setName(String name) {
 		this.name = name;
+		System.out.println("setName(): "+name);
 	}
 
 	public String getUserid() {
@@ -64,6 +65,7 @@ public class UserVO implements Serializable{
 
 	public void setUserid(String userid) {
 		this.userid = userid;
+		System.out.println("setUserid(): "+userid);
 	}
 
 	public String getPwd() {

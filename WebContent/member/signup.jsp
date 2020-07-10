@@ -2,6 +2,14 @@
     pageEncoding="UTF-8"%>
 <jsp:include page="/top.jsp"/>
 <script type="text/javascript">
+	/*아이디 중복체크 팝업창 열기*/
+	var win=null;
+	function openWin(){
+		f.flag.value="false";
+		win=window.open("idCheck.jsp","idCheck","width=400, height=400, left=100, top=100");
+	}
+
+
 	function check(){
 		if(!f.name.value){
 			alert('이름을 입력하세요');
@@ -43,12 +51,16 @@
 			alert('비밀번호 확인 다름');
 			return;
 		}
+		if(f.flag.value=="false"){
+			alert('아이디 중복 체크하세요');
+			return;
+		}
 		
 		f.submit();
 	}
 </script>
 <h1 class="text-primary m-5">SignUp</h1>
-	<form name="f" action="memberJoin.jsp" method="post">
+	<form name="f" action="memberJoin2.jsp" method="post">
 		<div class="row m-3">
 			<div class="col-md-3">이름</div>
 			<div class="col-md-6">
@@ -58,9 +70,12 @@
 		<div class="row m-3">
 			<div class="col-md-3">아이디</div>
 			<div class="col-md-6">
-				<input type="text" name="userid" placeholder="userid" class="form-control">
+				<input type="text" readonly name="userid" placeholder="userid" class="form-control">
+				<!-- hidden date -->
+				<input type="hidden" name="flag" value="false">
+				<!--  -->
 			</div>
-			<div class="col-md-3"><button type="button"class="btn btn-success">아이디 중복체크</button></div>
+			<div class="col-md-3"><button type="button" onclick="openWin()"class="btn btn-success">아이디 중복체크</button></div>
 		</div>
 		<div class="row m-3">
 			<div class="col-md-3">비밀번호</div>

@@ -4,8 +4,12 @@ import common.base.DAOBase;
 import jdbc.util.DBUtil;
 import user.domain.UserVO;
 import java.sql.*;
-
+import java.util.*;
 public class UserDAO extends DAOBase{
+	
+	public UserDAO() {
+		System.out.println("UserDAO 생성");
+	}
 	public int createUser(UserVO user) throws SQLException{
 		try {
 			con=DBUtil.getCon();
@@ -33,4 +37,53 @@ public class UserDAO extends DAOBase{
 			close();
 		}
 	}
+	public List<UserVO> listMember() throws SQLException{
+		try {
+			con=DBUtil.getCon();
+			String sql="select * from member order by idx desc";
+			ps=con.prepareStatement(sql);
+			rs=ps.executeQuery();
+			List<UserVO> arr= makeList(rs);
+			return arr;
+		}finally {
+			close();
+		}
+	}
+	
+	public List<UserVO> makeList(ResultSet rs) throws SQLException{
+		List<UserVO> arr= new ArrayList<>();
+		while(rs.next()) {
+			int idx = rs.getInt("idx");
+			String name = rs.getString("name");
+			String userid = rs.getString("userid");
+			String pwd = rs.getString("pwd");
+			String hp1 = rs.getString("hp1");
+			String hp2 = rs.getString("hp2");
+			String hp3 = rs.getString("hp3");
+			String post = rs.getString("post");
+			String addr1 = rs.getString("addr1");
+			String addr2 = rs.getString("addr2");
+			java.sql.Date indate=rs.getDate("indate");
+			int mileage=rs.getInt("mileage");
+			int mstate=rs.getInt("mstate");
+			UserVO user = new UserVO(idx,name,userid,pwd,hp1,hp2,hp3,post,addr1,addr2,indate,mileage,mstate);
+			arr.add(user);
+		}
+		return arr;
+	}
+	
+	public boolean idCheck(String userid) throws SQLException{
+		try {
+			con=DBUtil.getCon();
+			String sql="select * from member where userid=?";
+			ps=con.prepareStatement(sql);
+			ps.setString(1, userid);
+			rs=ps.executeQuery();
+			//아이디는 unique제약조건을 주었기 때문에 있으면 1개의 결과를 반환, 없으면 반환x
+			boolean bool = rs.next(); //==true를 반환하면 해당 아이디가 존재
+			return !bool;
+		}finally {
+			close();
+		}
+	}	
 }

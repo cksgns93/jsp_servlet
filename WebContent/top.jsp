@@ -43,9 +43,10 @@
 			<div class="col-md-3">
 				<ul class="list-group">
 					<li class="list-group-item"><a href="/MyWeb/example/form.jsp">입력폼</a></li>
-					<li class="list-group-item"><a href="#">Menu2</a></li>
-					<li class="list-group-item"><a href="#">Menu3</a></li>
-					<li class="list-group-item"><a href="#">Menu4</a></li>
+					<li class="list-group-item"><a href="/MyWeb/example/form2.jsp">입력폼2</a></li>
+					<li class="list-group-item"><a href="/MyWeb/example/form3.jsp">입력폼3</a></li>
+					<li class="list-group-item"><a href="/MyWeb/beans/input.jsp">Beans(page,session,application)</a></li>
+					<li class="list-group-item"><a href="/MyWeb/beans/input.jsp">Beans(request)</a></li>
 				</ul>
 			</div>
 			<div class="col-md-9">

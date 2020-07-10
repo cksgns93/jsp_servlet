@@ -25,7 +25,7 @@
 	int n = dao.createUser(user);
 	//5.실행결과 메시지 보여주고 페이지 이동시키기
 	String msg=(n>0)? "회원가입 성공":"회원가입 실패";
-	String loc=(n>0)? "members.jsp":"signup.jsp";
+	String loc=(n>0)? "members.jsp":"javascript:history.back()";
 %>
 <script>
 alert('<%=msg%>');
