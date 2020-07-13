@@ -35,16 +35,27 @@
 		}
 		%>
 	</table>
+	<!--삭제/수정 관련 폼-->
+	<form name="frm" method="POST">
+		<input type="hidden" name="idx" id="idx">
+	</form>
 </div>
 <script type="text/javascript">
 	var del=function(midx){
 		var yn=confirm(midx+"번 회원 정보를 정말 삭제할까요?");
 		if(yn){
 			location.href="memberDel.jsp?idx="+midx; //get방식
+			frm.idx.value=midx;
+			frm.action="memberDel.jsp";
+			frm.metho="POST";
+			frm.submit();
 		}
 	}
 	var edit=function(midx){
-		alert(midx);
+		$("#idx").val(midx);
+		$('form[name="frm"]').prop("method","POST")
+							 .prop("action","memberEdit.jsp")
+							 .submit();
 	}
 </script>
 <jsp:include page="/foot.jsp"/>

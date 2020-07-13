@@ -39,7 +39,7 @@
 	</nav>
 	<!-- navbar  -->
 	<div class="container" style="margin-top:30px;margin-bottom:30px">
-		<div class="row" style="height:620px;">
+		<div class="row" style="height:auto;">
 			<div class="col-md-3">
 				<ul class="list-group">
 					<li class="list-group-item"><a href="/MyWeb/example/form.jsp">입력폼</a></li>

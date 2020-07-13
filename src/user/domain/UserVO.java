@@ -154,4 +154,12 @@ public class UserVO implements Serializable{
 	public String getAllAddr() {
 		return "["+post+"] "+addr1+" "+addr2;
 	}
+
+	@Override
+	public String toString() {
+		return "UserVO [idx=" + idx + ", name=" + name + ", userid=" + userid + ", pwd=" + pwd + ", hp1=" + hp1
+				+ ", hp2=" + hp2 + ", hp3=" + hp3 + ", post=" + post + ", addr1=" + addr1 + ", addr2=" + addr2
+				+ ", indate=" + indate + ", mileage=" + mileage + ", mstate=" + mstate + "]";
+	}
+	
 }

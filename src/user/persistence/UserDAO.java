@@ -71,7 +71,22 @@ public class UserDAO extends DAOBase{
 		}
 		return arr;
 	}
-	
+		
+	/*회원탈퇴 처리를 하는 메소드*/
+	public int deleteMember(String idx) throws SQLException{
+		try {
+			con=DBUtil.getCon();
+			StringBuilder buf = new StringBuilder("update member set mstate=-1")
+					.append(" where idx=?");
+			String sql=buf.toString();
+			ps=con.prepareStatement(sql);
+			ps.setString(1, idx);
+			int n = ps.executeUpdate();
+			return n;
+		}finally {
+			close();
+		}
+	}
 	public boolean idCheck(String userid) throws SQLException{
 		try {
 			con=DBUtil.getCon();
@@ -86,4 +101,59 @@ public class UserDAO extends DAOBase{
 			close();
 		}
 	}	
+	/*회원번호(PK)로 회원정보 가져오는 메소드*/
+	public UserVO selectUserByIdx(String idx) throws SQLException{
+		try {
+			con=DBUtil.getCon();
+			String sql="select * from member where idx=?";
+			ps=con.prepareStatement(sql);
+			ps.setString(1, idx);
+			rs=ps.executeQuery();
+			List<UserVO> arr = makeList(rs);
+			if(arr!=null||arr.size()==1) {
+				UserVO user = arr.get(0);
+				return user;
+			}
+			return null;
+		}finally {
+			close();
+		}
+	}
+	
+	public int updateUser(UserVO user)throws SQLException{
+		try {
+			con=DBUtil.getCon();
+			String sql="update member set name=?,userid=?,pwd=?,hp1=?,hp2=?,hp3=?,post=?,addr1=?,addr2=?,mstate=?,mileage=? where idx=?";
+			ps=con.prepareStatement(sql);
+			ps.setString(1, user.getName());
+			ps.setString(2, user.getUserid());
+			ps.setString(3, user.getPwd());
+			ps.setString(4, user.getHp1());
+			ps.setString(5, user.getHp2());
+			ps.setString(6, user.getHp3());
+			ps.setString(7, user.getPost());
+			ps.setString(8, user.getAddr1());
+			ps.setString(9, user.getAddr2());
+			ps.setInt(10, user.getMstate());
+			ps.setInt(11, user.getMileage());
+			ps.setInt(12, user.getIdx());
+			int n = ps.executeUpdate();
+			return n;
+		}finally {
+			close();
+		}
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 }
