@@ -1,13 +1,22 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8" import="java.util.*,user.domain.*"%>
+    pageEncoding="UTF-8" import="java.util.*,user.domain.*,java.net.*"%>
 <jsp:include page="/top.jsp"/>
 
-<% //1.현재 보여줄 페이지 파라미터 값을 받자.
+<% 
+	//0. 검색유형과 검색어 받아오기
+	String findType=request.getParameter("findType");
+	String findKeyword=request.getParameter("findKeyword");
+	
+	//1.현재 보여줄 페이지 파라미터 값을 받자.
 	String cpStr=request.getParameter("cpage");
 	if(cpStr==null) cpStr="1"; //기본적으로 보여줄 페이지를 1페이지로 지정
 	int cpage = Integer.parseInt(cpStr.trim());
 	if(cpage<=0){//음수나 0일 경우는 1페이지로 지정
 		cpage=1;
+	}
+	if(findType==null||findType.trim().isEmpty()){
+		response.sendRedirect("members.jsp");
+		return;
 	}
 %>
 
@@ -18,7 +27,7 @@
 <div class="text-left p-5">
 	<div class="row">
 		<div class="col-md-12">
-			<h1>User List [Admin Page]</h1>
+			<h1>User 검색 결과 [<%=findKeyword %>]</h1>
 		</div>
 	</div>
 	<!-- 검색 폼 시작 -->
@@ -53,7 +62,8 @@
 		</tr>
 		<!--  -->
 		<% 
-		int totalCount = userDAO.getTotalUserCount(); //총 회원수
+		//검색한 회원 수 가져오기 
+		int totalCount = userDAO.getFindTotalUserCount(findType,findKeyword); //총 회원수
 		int pageSize = 5; //한 페이지 당 보여줄 목록 갯수
 		int pageCount = 1;
 		if(totalCount>=0){
@@ -67,7 +77,7 @@
 		int end = cpage*pageSize;
 		int start = end-(pageSize-1);
 		
-		List<UserVO> arr=userDAO.listMember(start,end);
+		List<UserVO> arr=userDAO.findMember(findType, findKeyword, start, end);
 		if(arr!=null){
 			for(UserVO user:arr){
 		%>
@@ -87,8 +97,10 @@
 		<tr>
 			<td colspan="4" class="text-center">
 			<ul class="pagination justify-content-center">
-			<% for(int i=1;i<=pageCount;i++){%>
-				<li class="page-item <%=(i==cpage)?"active":"" %>"><a class="page-link"href="members.jsp?cpage=<%=i%>"><%=i %></a></li>
+			<% for(int i=1;i<=pageCount;i++){
+				String str="&findType="+findType+"&findKeyword="+URLEncoder.encode(findKeyword,"UTF-8");
+			%>
+				<li class="page-item <%=(i==cpage)?"active":"" %>"><a class="page-link"href="memberFind.jsp?cpage=<%=i%><%=str%>"><%=i %></a></li>
 			<% }%>
 			</ul>
 			</td><td colspan="2"><b>총 회원수: <span class="text-danger"><%=totalCount %></span></b></td>

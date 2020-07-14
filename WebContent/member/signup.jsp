@@ -8,6 +8,9 @@
 		f.flag.value="false";
 		win=window.open("idCheck.jsp","idCheck","width=400, height=400, left=100, top=100");
 	}
+	function openWin2(){
+		win2=window.open("postCheck.jsp","postCheck","width=600, height=400, left=100, top=100");
+	}
 
 
 	function check(){
@@ -106,7 +109,7 @@
 			<div class="col-md-6">
 				<input type="text" name="post" id="post"placeholder="Post" class="form-control" maxlength="5">
 			</div>
-			<div class="col-md-3"><button type="button"class="btn btn-success">우편번호 찾기</button></div>
+			<div class="col-md-3"><button type="button"class="btn btn-success" onclick="openWin2()">우편번호 찾기</button></div>
 		</div>
 		<div class="row m-3">
 			<div class="col-md-3">주소</div>

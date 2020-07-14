@@ -37,6 +37,7 @@ public class UserDAO extends DAOBase{
 			close();
 		}
 	}
+	/*모든 회원 목록 가져오기 (페이징 처리하기 전)*/
 	public List<UserVO> listMember() throws SQLException{
 		try {
 			con=DBUtil.getCon();
@@ -49,7 +50,96 @@ public class UserDAO extends DAOBase{
 			close();
 		}
 	}
+	//---
+	/*총 회원 수 가져오기*/
+	public int getTotalUserCount() throws SQLException{
+		try {
+			con=DBUtil.getCon();
+			String sql="select count(idx) cnt from member"; 
+			ps=con.prepareStatement(sql);
+			rs=ps.executeQuery();
+			int count=0;
+			if(rs.next()) {
+				count = rs.getInt("cnt");
+			}
+			return count;
+		}finally {
+			close();
+		}
+	}
+	/*검색한 회원수 가져오기*/
+	public int getFindTotalUserCount(String type, String keyword) throws SQLException{
+		try {
+			String colName="";
+			switch(type) {
+			case "1" : colName="name"; break;
+			case "2" : colName="userid"; break;
+			case "3" : colName="hp1||hp2||hp3"; break;
+			}
+			con=DBUtil.getCon();
+			String sql="select count(idx) cnt from member where "+colName+" like ?";
+			ps=con.prepareStatement(sql);
+			ps.setString(1, "%"+keyword+"%");
+			rs=ps.executeQuery();
+			int count =0;
+			if(rs.next()) {
+				count = rs.getInt("cnt");
+			}
+			return count;
+		}finally {
+			close();
+		}
+	}
+	/*모든 회원 목록 가져오기 (페이징 처리 후)*/
+	public List<UserVO> listMember(int start, int end) throws SQLException{
+		try {
+			con=DBUtil.getCon();
+			String sql="";
+			StringBuilder buf = new StringBuilder("select * from(")
+					.append(" select rownum rn, a.* from")
+					.append(" (select * from member order by idx desc) a)")
+					.append(" where rn between ? and ?");
+			sql=buf.toString();
+			ps=con.prepareStatement(sql);
+			ps.setInt(1, start);
+			ps.setInt(2, end);
+			rs=ps.executeQuery();
+			List<UserVO> arr= makeList(rs);
+			return arr;
+		}finally {
+			close();
+		}
+	}
 	
+	/*모든 검색 회원 목록 가져오기 (페이징 처리 후)*/
+	public List<UserVO> findMember(String type, String keyword,int start, int end) throws SQLException{
+		try {
+			con=DBUtil.getCon();
+			String colName="";
+			switch(type) {
+			case "1" : colName="name"; break;
+			case "2" : colName="userid"; break;
+			case "3" : colName="hp1||hp2||hp3"; break;
+			}
+			String sql=""; //wgho순서
+			StringBuilder buf = new StringBuilder("select * from(")
+					.append(" select rownum rn, a.* from")
+					.append(" (select * from member where ")
+					.append(colName+" like ?")
+					.append(" order by idx desc) a)")
+					.append(" where rn between ? and ?");
+			sql=buf.toString();
+			ps=con.prepareStatement(sql);
+			ps.setString(1, "%"+keyword+"%");
+			ps.setInt(2, start);
+			ps.setInt(3, end);
+			rs=ps.executeQuery();
+			List<UserVO> arr= makeList(rs);
+			return arr;
+		}finally {
+			close();
+		}
+	}
 	public List<UserVO> makeList(ResultSet rs) throws SQLException{
 		List<UserVO> arr= new ArrayList<>();
 		while(rs.next()) {
@@ -143,17 +233,6 @@ public class UserDAO extends DAOBase{
 			close();
 		}
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	
 	
 }
