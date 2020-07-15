@@ -1,10 +1,14 @@
 package user.persistence;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+
+import commom.exception.NotUserException;
 import common.base.DAOBase;
 import jdbc.util.DBUtil;
 import user.domain.UserVO;
-import java.sql.*;
-import java.util.*;
 public class UserDAO extends DAOBase{
 	
 	public UserDAO() {
@@ -200,7 +204,24 @@ public class UserDAO extends DAOBase{
 			ps.setString(1, idx);
 			rs=ps.executeQuery();
 			List<UserVO> arr = makeList(rs);
-			if(arr!=null||arr.size()==1) {
+			if(arr!=null||arr.size()>=1) {
+				UserVO user = arr.get(0);
+				return user;
+			}
+			return null;
+		}finally {
+			close();
+		}
+	}
+	public UserVO selectUserByUserid(String userid) throws SQLException{
+		try {
+			con=DBUtil.getCon();
+			String sql="select * from memberView where userid=?";
+			ps=con.prepareStatement(sql);
+			ps.setString(1, userid);
+			rs=ps.executeQuery();
+			List<UserVO> arr = makeList(rs);
+			if(arr!=null||arr.size()>=1) {
 				UserVO user = arr.get(0);
 				return user;
 			}
@@ -232,6 +253,19 @@ public class UserDAO extends DAOBase{
 		}finally {
 			close();
 		}
+	}
+	
+	public UserVO loginCheck(String userid, String pwd) throws SQLException, NotUserException{
+		UserVO user = this.selectUserByUserid(userid);
+		if(user==null) {
+			//아이디가 존재하지 않을 경우
+			throw new NotUserException(userid+"란 아이디는 존재하지 않는다.");
+		}
+		//비번 체크
+		if(!pwd.equals(user.getPwd())){
+			throw new NotUserException("비밀번호가 일치하지 않음");
+		}
+		return user;
 	}
 	
 	

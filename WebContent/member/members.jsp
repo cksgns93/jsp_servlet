@@ -1,5 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8" import="java.util.*,user.domain.*"%>
+    
+<!-- 관리자 여부 체크 모듈 포함 -->
+<%@ include file="/login/adminCheckModule.jsp" %>
 <jsp:include page="/top.jsp"/>
 
 <% //1.현재 보여줄 페이지 파라미터 값을 받자.

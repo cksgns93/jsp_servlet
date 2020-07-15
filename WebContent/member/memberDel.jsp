@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!-- 소스를 포함시키는 방식으로 function.jsp를 포함시킨다. -->
+<%@ include file="/login/adminCheckModule.jsp" %>
 <%@ include file="/include/function.jsp" %>
 <%
 	//1.삭제할 회원번호 받아오기

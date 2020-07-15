@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8" import="user.domain.UserVO"%>
 <!-- 소스를 포함시키는 방식으로 function.jsp를 포함시킨다. -->
+<%@ include file="/login/adminCheckModule.jsp" %>
 <%@ include file="/include/function.jsp" %>
 <% request.setCharacterEncoding("UTF-8");%>
 <jsp:include page="/top.jsp"/>

@@ -15,9 +15,9 @@ public class ZipDAO extends DAOBase{
 		try {
 			List<ZipVO> arr=new ArrayList<ZipVO>();
 			con=DBUtil.getCon();
-			String sql="select * from zipcode where doro_kor=?";
+			String sql="select * from zipcode where doro_kor like ?";
 			ps = con.prepareStatement(sql);
-			ps.setString(1, doro);
+			ps.setString(1, "%"+doro+"%");
 			rs = ps.executeQuery();
 			arr = makeList(rs); 
 			return arr;

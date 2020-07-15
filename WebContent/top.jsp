@@ -1,5 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+    pageEncoding="UTF-8" import="user.domain.*"%>
+<%
+	//세션에 저장된 loginUser가 있는지 꺼내보자
+	UserVO loginUser=(UserVO)session.getAttribute("loginUser");
+%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -29,9 +33,20 @@
 	    <li class="nav-item">
 	      <a class="nav-link" href="/MyWeb/member/signup.jsp">SignUp</a>
 	    </li>
+	    <% 
+	    	if(loginUser==null){
+	    %>
 	    <li class="nav-item">
 	      <a class="nav-link" href="/MyWeb/login/signin.jsp">SignIn</a>
 	    </li>
+	    <% }else{%>
+	    <li class="nav-item bg-primary">
+	      <a class="nav-link" href="#"><%=loginUser.getUserid()%>님 로그인 중</a>
+	    </li>
+	    <li class="nav-item">
+	      <a class="nav-link" href="/MyWeb/login/logout.jsp">Logout</a>
+	    </li>
+	    <% }%>
 	    <li class="nav-item">
 	      <a class="nav-link" href="/MyWeb/member/members.jsp">Members</a>
 	    </li>
@@ -47,6 +62,12 @@
 					<li class="list-group-item"><a href="/MyWeb/example/form3.jsp">입력폼3</a></li>
 					<li class="list-group-item"><a href="/MyWeb/beans/input.jsp">Beans(page,session,application)</a></li>
 					<li class="list-group-item"><a href="/MyWeb/beans/input.jsp">Beans(request)</a></li>
+					<li class="list-group-item"><a href="/MyWeb/login/sessionTest.jsp">Session테스트</a></li>
+					<li class="list-group-item"><a href="/MyWeb/login/memberTest.jsp">회원 인증 페이지</a></li>
+					<li class="list-group-item"><a href="/MyWeb/cookie/cookieTest.jsp">cookie테스트</a></li>
+					<li class="list-group-item"><a href="/MyWeb/login/adminCheckModule.jsp">관리자테스트</a></li>
+					<li class="list-group-item"><a href="#">파일업로드1</a></li>
+					<li class="list-group-item"><a href="#">파일업로드2</a></li>
 				</ul>
 			</div>
 			<div class="col-md-9">

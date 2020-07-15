@@ -13,6 +13,13 @@
 <!-- Latest compiled JavaScript -->
 <script
 	src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+	<style>
+	.scrolltable {
+    	display: block;
+    	overflow-y:scroll ;
+    	height : 300px;
+	}
+	</style>
 <div class="container">
 	<%
 		//요청방식을 알아내보자
@@ -41,7 +48,7 @@
 		scope="session" />
 	<%
 	List<ZipVO> rs = zipDao.selectAll(doro);
-	out.println("<div class='container'>");
+	out.println("<div class='scrolltable container'>");
 		out.println("<table class='table table-bordered table-hover'style='border:1px solid'>");
 		out.println("<tr><th>우편번호</th><th>상세주소</th></tr>");
 		if (rs.size()!=0) {
