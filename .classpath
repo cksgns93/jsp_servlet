@@ -8,5 +8,6 @@
 	</classpathentry>
 	<classpathentry kind="con" path="org.eclipse.jst.j2ee.internal.web.container"/>
 	<classpathentry kind="con" path="org.eclipse.jst.j2ee.internal.module.container"/>
+	<classpathentry kind="lib" path="C:/Tomcat 8.5/lib/cos.jar"/>
 	<classpathentry kind="output" path="build/WEB-INF/classes"/>
 </classpath>

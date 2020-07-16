@@ -8,6 +8,10 @@
 <%
 	String userid = request.getParameter("userid");
 	String pwd = request.getParameter("pwd");
+	
+	//아이디 저장 체크박스 파라미터값 받기
+	String chkId = request.getParameter("saveId");
+	
 	if(userid==null||pwd==null||userid.trim().isEmpty()||pwd.trim().isEmpty()){
 		goUrl("잘못 들어온 경로 입니다.","../index.jsp",out);
 		return;
@@ -27,6 +31,16 @@
 		
 		session.setAttribute("loginUser", loginUser);
 		
+		//saveId에 체크했다면 쿠키를 생성해서 사용자 아이디를 저장하고 유효시간을 설정한다. (7일간)
+		//response통해 쿠키를 전송한다.
+		Cookie ck = new Cookie("saveId",loginUser.getUserid());
+		if(chkId!=null){
+			//아이디 저장에 체크를 한 경우
+			ck.setMaxAge(60*60*24*7);
+		}else{
+			ck.setMaxAge(0);
+		}
+		response.addCookie(ck);
 		response.sendRedirect("../index.jsp");
 		return;
 	}

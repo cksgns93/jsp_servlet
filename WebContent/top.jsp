@@ -66,8 +66,9 @@
 					<li class="list-group-item"><a href="/MyWeb/login/memberTest.jsp">회원 인증 페이지</a></li>
 					<li class="list-group-item"><a href="/MyWeb/cookie/cookieTest.jsp">cookie테스트</a></li>
 					<li class="list-group-item"><a href="/MyWeb/login/adminCheckModule.jsp">관리자테스트</a></li>
-					<li class="list-group-item"><a href="#">파일업로드1</a></li>
-					<li class="list-group-item"><a href="#">파일업로드2</a></li>
+					<li class="list-group-item"><a href="/MyWeb/file/upload.jsp">파일업로드1</a></li>
+					<li class="list-group-item"><a href="/MyWeb/file/upload2.jsp">파일업로드2</a></li>
+					<li class="list-group-item"><a href="/MyWeb/file/fileList.jsp">파일업로드목록</a></li>
 				</ul>
 			</div>
 			<div class="col-md-9">
