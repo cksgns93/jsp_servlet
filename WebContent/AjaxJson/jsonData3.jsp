@@ -1,0 +1,29 @@
+<%@ page language="java" contentType="application/json; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+{"book_all":[
+	{
+		"isbn":"887799",
+		"title":"Ajax입문",
+		"publish":"에이콘출판사",
+		"price":35000,
+		"published":"2020-07-29",
+		"bimage":"a.jpg"
+	},
+	{
+	"isbn":"117799",
+	"title":"JSP입문",
+	"publish":"생능출판사",
+	"price":25000,
+	"published":"2020-06-29",
+	"bimage":"b.jpg"
+	},
+	{
+	"isbn":"227799",
+	"title":"Java입문",
+	"publish":"힌빛출판사",
+	"price":35000,
+	"published":"2018-07-29",
+	"bimage":"c.jpg"
+	}
+]
+}

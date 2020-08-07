@@ -6,7 +6,16 @@
 <div class="text-left p-5">
 	<h1>MultipartRequest를 이용한 파일 업로드</h1>
 <%
-	String upDir="C:\\myjava\\workspace\\MyWeb\\WebContent\\upload";
+	//String upDir="C:\\myjava\\workspace\\MyWeb\\WebContent\\upload";
+	// /MyWeb/upload/==> 절대경로를 얻어오자. application 내장객체를 이용 ServletContext 타입
+	// ServletContext application = request.getServletContext();
+	// session.getServletContext()
+	String upDir=application.getRealPath("/upload");
+	//컨텍스트를 기준으로 /upload디렉토리의 절대경로를 반환한다.
+	// upDir ==> /MyWeb/upload
+	System.out.println(upDir);
+	//이클립스의 경우 다음과 같이 나온다.
+	//C:\\myjava\\workspace\\.metadata\\.plugins\\org.eclipse.wst.server.core\\tmp0\\wtpwebapps\\MyWeb\\upload
 	MultipartRequest mr=null;
 	try{
 		DefaultFileRenamePolicy df= new DefaultFileRenamePolicy();
@@ -37,6 +46,15 @@
 		out.println("<h2>원본파일명: "+originfilename+"</h2>");
 		out.println("<h2>파일크기: "+fsize+"bytes</h2>");
 		out.println("<h2>파일 컨텐트 타입: "+ctype+"</h2>");
+		
+		if(ctype.equals("image/png")||ctype.equals("images/jpg")||ctype.equals("image/gif")||ctype.equals("image/jpeg")){
+			%>
+			<img src="<%=request.getContextPath()%>/upload/<%=filename%>">
+			<%
+		}
+		%>
+		<h1><a href="fileList.jsp">파일 목록 보러가기</a></h1>		
+		<%
 	}catch(java.io.IOException e){
 		out.println("<h2 class='text-danger'>파일 업로드 실패</h2>");
 		//파일 용량 초과 or enctype이 multipart/form-data가 아닐 때 예외 발생함
